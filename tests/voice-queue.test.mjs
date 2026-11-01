@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {splitSpeech,speakQueue} from '../apps/web/voice-queue.js';
+test('长话按句分段，保持完整文字且每段不超过36字',()=>{const text='您好，欢迎！'+ '长'.repeat(80)+'。谢谢。';const parts=splitSpeech(text);assert.equal(parts.join(''),text);assert.ok(parts.every(p=>p.length<=36));});
+test('第一段准备后即播放，播放期间提前生成下一段，取消不再播放',async()=>{const events=[],c=new AbortController();await assert.rejects(speakQueue('你好。欢迎。',{signal:c.signal,fetchPart:async p=>{events.push('生成'+p);return p;},playPart:async p=>{events.push('播放'+p);c.abort();}}),{name:'AbortError'});assert.deepEqual(events,['生成你好。','生成欢迎。','播放你好。']);});

@@ -1,0 +1,8 @@
+{
+  "model": "Qwen3-TTS-12Hz-0.6B-Base",
+  "text": "您好，今天有什么可以帮您？",
+  "time_to_complete_audio": 11.25,
+  "streaming": false,
+  "cache": "sentence-not-prepared",
+  "sampleSha256": "7a0e8889d8afb1cc78f705b093c9407346005d6721a174812e6b23214e5f1190"
+}

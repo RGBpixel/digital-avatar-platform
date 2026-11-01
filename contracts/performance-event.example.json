@@ -1,0 +1,13 @@
+{
+  "protocolVersion": "0.1-draft",
+  "sessionId": "demo-session",
+  "responseId": "demo-response",
+  "characterId": "panda",
+  "sequence": 1,
+  "type": "expression",
+  "startMs": 500,
+  "durationMs": 1000,
+  "clock": "response-audio-playback",
+  "parameters": {"name": "curious", "intensity": 0.6},
+  "fallback": "head_tilt"
+}

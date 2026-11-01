@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {isTaskRequest} from '../services/api/reminder-intent.mjs';
+test('普通提问、讨论提醒功能不误触发，只有明确委托触发',()=>{for(const text of ['你怎么一直提醒我','为什么一直说没有找到对应人员','你有什么通知吗','提醒功能怎么用','你会转告别人吗','我们聊聊通知系统','不要提醒我','今天天气怎么样'])assert.equal(isTaskRequest(text),false,text);for(const text of ['提醒我明天开会','呃，记得下次见到我时候提醒我，明天上午10点','通知江岩明天开会','帮我转告老江，快递到了','我想让你提醒我明天上班'])assert.equal(isTaskRequest(text),true,text);});
+
+test('口语委托前缀和停顿不丢失本人提醒及具体任务',async()=>{const {selfReminderText}=await import('../services/api/reminder-intent.mjs');for(const t of ['帮我，下次见到我时候提醒我明天上午十点钟要开会','帮我在下次见到我的时候提醒我明天上午十点钟要开会','请你帮我，下次见到我的时候，提醒我明天上午十点钟要开会','以后见到我的时候提醒我明天上午十点钟要开会']){assert.equal(isTaskRequest(t),true,t);assert.equal(selfReminderText(t),'明天上午十点钟要开会',t);}});

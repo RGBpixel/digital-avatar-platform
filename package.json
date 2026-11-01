@@ -1,0 +1,1 @@
+{"name":"digital-avatar-platform","private":true,"type":"module","scripts":{"start":"node services/api/server.mjs","test":"node --test tests/*.test.mjs"},"dependencies":{"pinyin-pro":"^3.29.5"}}

@@ -1,0 +1,6 @@
+import {createHash,randomUUID} from 'node:crypto';
+export class VideoIdentity{
+ constructor(reception,{clock=Date.now}={}){this.r=reception;this.clock=clock;this.tracks=new Map();}
+ observe(site,result,image){const face=result.count===1&&result.faces?.[0]?.status==='candidate'?result.faces[0]:null;if(!face){this.tracks.delete(site);return;}const digest=createHash('sha256').update(image).digest('hex'),now=this.clock();let track=this.tracks.get(site);if(!track||track.personId!==face.personId||now-track.last>5000)track={personId:face.personId,frames:0,first:now,digest:null,last:now,proof:null};if(track.digest!==digest){track.frames++;track.digest=digest;}track.last=now;const ready=track.frames>=3&&now-track.first>=1200;if(ready){track.proof=randomUUID();track.proofUntil=now+8000;}else track.proof=null;this.tracks.set(site,track);face.videoReady=ready;face.stableVideoFrames=track.frames;if(ready)face.videoProof=track.proof;}
+ confirm(site,b){const track=this.tracks.get(site);if(!track||!track.proof||track.personId!==b.personId||track.proof!==b.proof||track.proofUntil<=this.clock()||this.clock()-track.last>3000)throw Error('视频人脸尚未稳定或已经变化，请稍候');this.r.person(site,b.personId);track.proof=null;return {personId:b.personId,mode:'video-face-chat-prototype',identitySource:'video',verified:false};}
+}

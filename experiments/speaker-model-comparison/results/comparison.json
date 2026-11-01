@@ -1,0 +1,225 @@
+{
+  "date": "2026-10-14",
+  "environment": {
+    "python": "3.12.14",
+    "processor": "Intel64 Family 6 Model 198 Stepping 2, GenuineIntel",
+    "provider": "cpu",
+    "threads": 2,
+    "sherpa_onnx": "1.13.8"
+  },
+  "scope": "Offline feasibility, extraction speed and score separation only; synthetic same speaker plus one public other speaker. Not a live microphone or human population accuracy benchmark. No EER/FAR/FRR claims. Running platform model and threshold unchanged.",
+  "protocol": {
+    "warmups": 1,
+    "timingRuns": 9,
+    "timingAudio": "same-other-sentence",
+    "timingIncludes": "energy trimming + feature extraction + normalized embedding; excludes loading, disk decode, recording, ASR, LLM, TTS",
+    "references": [
+      "long-reference",
+      "short-reference"
+    ],
+    "mixMeaning": "digitally mixed, not a physical phone loudspeaker or measured room acoustics",
+    "scores": "cosine similarities, no shared decision threshold; larger score is not automatically better across models"
+  },
+  "inputs": {
+    "long-reference": {
+      "path": "data/speaker-same-person-0.wav",
+      "sha256": "0085a58aee80eaeb1772459ed9fc604bf2b8f4e0b85579bbfb5acfaa99f9e328",
+      "seconds": 3.913,
+      "source": "Windows synthetic Chinese voice; not user recording"
+    },
+    "short-reference": {
+      "path": "data/synthetic-wake-test.wav",
+      "sha256": "c019fa1d548d9be50161fb203b504234b152bfcf995b1276eeaf939c557e54a5",
+      "seconds": 1.724,
+      "source": "Windows synthetic Chinese voice; not user recording"
+    },
+    "same-other-sentence": {
+      "path": "data/speaker-same-person-1.wav",
+      "sha256": "0cd289b7acdc783bd80594a6b5a86fce5c9c135a1feef4e1d69a6f88b22f315c",
+      "seconds": 4.833,
+      "source": "Windows synthetic Chinese voice; not user recording"
+    },
+    "different-voice": {
+      "path": "models/sensevoice-small-int8/test_wavs/zh.wav",
+      "sha256": "b77f1794fe374a0ba1ee1dc458bfaf9349496cbbfc32780c50ba3c5a7ad8e373",
+      "seconds": 5.592,
+      "source": "public official model test audio"
+    }
+  },
+  "models": [
+    {
+      "model": "CAM++ current",
+      "modelBytes": 28281138,
+      "sha256": "f682b514c05d947ee3fa91cd6ec6c5c7543479a128373fa29b1faedccd21fd11",
+      "embeddingDim": 192,
+      "loadMs": 624.78,
+      "medianMs": 56.48,
+      "p95Ms": 59.7,
+      "timingRunsMs": [
+        60.26,
+        57.36,
+        58.85,
+        55.59,
+        56.48,
+        53.39,
+        55.78,
+        56.92,
+        50.34
+      ],
+      "scores": {
+        "same-clean": {
+          "long-reference": 0.8589,
+          "short-reference": 0.7189
+        },
+        "same-quieter-12db": {
+          "long-reference": 0.8612,
+          "short-reference": 0.7183
+        },
+        "same-white-noise-15db": {
+          "long-reference": 0.772,
+          "short-reference": 0.6418
+        },
+        "same-other-speech-6db": {
+          "long-reference": 0.5704,
+          "short-reference": 0.4859
+        },
+        "same-other-speech-0db": {
+          "long-reference": 0.3189,
+          "short-reference": 0.2695
+        },
+        "different-clean": {
+          "long-reference": -0.0238,
+          "short-reference": -0.0476
+        },
+        "different-quieter-12db": {
+          "long-reference": -0.0435,
+          "short-reference": -0.0529
+        },
+        "same-then-other": {
+          "long-reference": 0.4221,
+          "short-reference": 0.3165
+        }
+      },
+      "cleanSeparation": {
+        "long-reference": 0.8827,
+        "short-reference": 0.7665
+      }
+    },
+    {
+      "model": "CAM++ Advanced",
+      "modelBytes": 28281164,
+      "sha256": "aa3cfc16963a10586a9393f5035d6d6b57e98d358b347f80c2a30bf4f00ceba2",
+      "embeddingDim": 192,
+      "loadMs": 562.62,
+      "medianMs": 54.08,
+      "p95Ms": 58.19,
+      "timingRunsMs": [
+        58.22,
+        55.18,
+        55.28,
+        58.16,
+        54.08,
+        53.95,
+        50.83,
+        50.82,
+        51.61
+      ],
+      "scores": {
+        "same-clean": {
+          "long-reference": 0.9056,
+          "short-reference": 0.7579
+        },
+        "same-quieter-12db": {
+          "long-reference": 0.9044,
+          "short-reference": 0.7564
+        },
+        "same-white-noise-15db": {
+          "long-reference": 0.8364,
+          "short-reference": 0.6704
+        },
+        "same-other-speech-6db": {
+          "long-reference": 0.8527,
+          "short-reference": 0.7177
+        },
+        "same-other-speech-0db": {
+          "long-reference": 0.6031,
+          "short-reference": 0.4651
+        },
+        "different-clean": {
+          "long-reference": -0.0925,
+          "short-reference": -0.1422
+        },
+        "different-quieter-12db": {
+          "long-reference": -0.1157,
+          "short-reference": -0.1479
+        },
+        "same-then-other": {
+          "long-reference": 0.5862,
+          "short-reference": 0.4518
+        }
+      },
+      "cleanSeparation": {
+        "long-reference": 0.9981,
+        "short-reference": 0.9001
+      }
+    },
+    {
+      "model": "ERes2NetV2",
+      "modelBytes": 71441526,
+      "sha256": "bf1a75b9930474cf3389ef415e6e5d38ca96fea4a3a00f7e301d080a58ee2239",
+      "embeddingDim": 192,
+      "loadMs": 685.08,
+      "medianMs": 233.22,
+      "p95Ms": 303.44,
+      "timingRunsMs": [
+        233.22,
+        210.07,
+        195.84,
+        227.0,
+        310.23,
+        293.26,
+        287.07,
+        274.52,
+        206.54
+      ],
+      "scores": {
+        "same-clean": {
+          "long-reference": 0.8858,
+          "short-reference": 0.75
+        },
+        "same-quieter-12db": {
+          "long-reference": 0.8845,
+          "short-reference": 0.7465
+        },
+        "same-white-noise-15db": {
+          "long-reference": 0.7248,
+          "short-reference": 0.574
+        },
+        "same-other-speech-6db": {
+          "long-reference": 0.588,
+          "short-reference": 0.4491
+        },
+        "same-other-speech-0db": {
+          "long-reference": 0.4417,
+          "short-reference": 0.3571
+        },
+        "different-clean": {
+          "long-reference": -0.1337,
+          "short-reference": -0.065
+        },
+        "different-quieter-12db": {
+          "long-reference": -0.1059,
+          "short-reference": -0.0573
+        },
+        "same-then-other": {
+          "long-reference": 0.4492,
+          "short-reference": 0.4022
+        }
+      },
+      "cleanSeparation": {
+        "long-reference": 1.0195,
+        "short-reference": 0.815
+      }
+    }
+  ]
+}

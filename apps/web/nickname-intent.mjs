@@ -1,0 +1,4 @@
+// Only explicit self-directed requests; never rename someone mentioned in conversation.
+export function nicknameRequest(text){const t=text.trim().replace(/[。！!？?]+$/,'').replace(/^(?:(?:请|你|麻烦你|我希望你|我想让你)[，,\s]*)?(?:(?:下次|以后|今后|往后)(?:再)?)?(?:要)?(?:见到|看到|碰到|遇到|进到)我(?:的时候|时|以后)?[，,\s]*(?:(?:你|请|记得|要|就|都)[，,\s]*)*(?:叫|喊|称呼)我/,'以后叫我');const match=t.match(/^(?:(?:那|嗯|好)[，,\s]*)?(?:(?:请|麻烦你|你)?(?:以后|今后|从现在起|今天|现在)(?:就|都|先)?(?:请|你)?(?:叫|喊|称呼)我|(?:请|你)?(?:就)?(?:叫|喊|称呼)我|(?:我(?:想|希望)(?:让你|你)?)(?:以后|今天|现在)?(?:叫|喊|称呼)我|(?:把)?(?:我的)?昵称(?:修改成|修改为|改成|改为|换成|换为)|我的新昵称是)[“「"']?(.{1,40}?)[”」"']?(?:吧|就好|就行|好吗|好不好)?$/);if(!match)return null;const value=match[1].trim();if(!value||/[，,。；;？！?!]/.test(value)||/^(什么|啥|谁|名字|一下)$/.test(value))return null;return value;}
+
+export function profileConfirmation(text){const t=text.trim().replace(/[，,。！!？?\s]/g,'').replace(/^(嗯|好的|好|是的)(?=确认|同意)/,'');return /^(确认|确认保存|同意保存|同意建档|是|是的|对|对的|好的|好|可以|就这样|没错|取消|不保存|拒绝|不同意)$/.test(t)?t:null;}

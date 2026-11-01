@@ -1,0 +1,6 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {LiveSearch,publicQuery} from '../services/api/live-search.mjs';
+test('仅映射固定公共主题，不导出人物原话',()=>{assert.equal(publicQuery('我是老江，最新娱乐新闻有吗'),'最新娱乐新闻');assert.equal(publicQuery('查一下老江公司地址'),null);assert.equal(publicQuery('我喜欢体育'),null);});
+test('搜索固定载荷、来源与缓存',async()=>{let calls=0;const search=new LiveSearch({fetcher:async url=>{calls++;assert.equal(url.searchParams.get('q'),'最新娱乐新闻');return new Response('<li class="res-list"><h3><a href="https://example.com/news">新闻标题</a></h3><p class="res-desc">来源摘要</p></li>');}});const a=await search.search('最新娱乐新闻');assert.equal(a.results.length,1);assert.equal(a.results[0].id,1);await search.search('最新娱乐新闻');assert.equal(calls,1);await assert.rejects(search.search('个人私密资料'));});
+test('搜索失败不填造资料，取消继续传递',async()=>{const search=new LiveSearch({fetcher:async()=>{throw Error('offline');}});assert.equal((await search.search('最新科技新闻')).results.length,0);const c=new AbortController();c.abort();await assert.rejects(search.search('最新科技新闻',{signal:c.signal}));});
+
+test('现在有什么乒乓球比赛自动查赛程，不发送姓名与原话',()=>{assert.equal(publicQuery('现在有没有什么重要乒乓球比赛'),'乒乓球近期重要比赛 WTT 国际乒联 赛程');assert.equal(publicQuery('老江想问本周WTT赛程'),'乒乓球近期重要比赛 WTT 国际乒联 赛程');assert.equal(publicQuery('我喜欢乒乓球'),null);});

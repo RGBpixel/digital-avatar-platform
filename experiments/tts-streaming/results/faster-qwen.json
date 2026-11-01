@@ -1,0 +1,20 @@
+[
+  {
+    "run": 1,
+    "first_chunk_seconds": 0.766,
+    "total_seconds": 2.266,
+    "audio_seconds": 2.96,
+    "chunks": 10,
+    "chunk_size": 4,
+    "streaming": true
+  },
+  {
+    "run": 2,
+    "first_chunk_seconds": 0.25,
+    "total_seconds": 1.734,
+    "audio_seconds": 3.2,
+    "chunks": 10,
+    "chunk_size": 4,
+    "streaming": true
+  }
+]

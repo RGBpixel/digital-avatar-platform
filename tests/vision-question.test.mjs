@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {visualQuestionFocus,isVisionCapabilityQuestion} from '../apps/web/vision-question.mjs';
+test('当前画面问题直接进入视觉，普通手机话题和品牌推荐不误送摄像头',()=>{for(const text of ['我手里拿的是什么','我拿的是什么东西','你看到了什么','识别一下手机'])assert.equal(visualQuestionFocus(text),'objects',text);for(const text of ['这件衣服是什么牌子','我的衣服品牌是什么'])assert.equal(visualQuestionFocus(text),'brand',text);for(const text of ['手机品牌哪个好','我想买手机','明天提醒我带手机'])assert.equal(visualQuestionFocus(text),null,text);});
+
+test('能力质疑查询本机状态而非重复旧的能力否认',()=>{for(const text of ['你能识别物品吗','你不是不能识别物品吗','你怎么说没有识别物品的能力','你能不能识别手机','你有什么视觉能力'])assert.equal(isVisionCapabilityQuestion(text),true,text);for(const text of ['明天提醒我带手机','手机品牌哪个好','我手里拿的是什么'])assert.equal(isVisionCapabilityQuestion(text),false,text);});

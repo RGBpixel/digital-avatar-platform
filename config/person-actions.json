@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "actions": {
+    "set_nickname": {"enabled": true, "label": "修改本人日常称呼", "maxLength": 40},
+    "set_interests": {"enabled": true, "label": "修改本人兴趣偏好", "maxLength": 200},
+    "prepare_reminder": {"enabled": true, "label": "登记本人提醒草稿，核对后保存", "maxLength": 800}
+  }
+}

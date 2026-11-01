@@ -1,0 +1,26 @@
+[
+  {
+    "run": 1,
+    "first_chunk_seconds": 3.921,
+    "total_seconds": 5.89,
+    "audio_seconds": 3.36,
+    "chunks": 3,
+    "streaming": true,
+    "reference_preparation_seconds": 1.016,
+    "onnx_providers": [
+      "CPUExecutionProvider"
+    ]
+  },
+  {
+    "run": 2,
+    "first_chunk_seconds": 3.391,
+    "total_seconds": 3.391,
+    "audio_seconds": 2.92,
+    "chunks": 1,
+    "streaming": true,
+    "reference_preparation_seconds": 1.016,
+    "onnx_providers": [
+      "CPUExecutionProvider"
+    ]
+  }
+]

@@ -1,0 +1,2 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {speechThreshold} from '../apps/web/endpoint-policy.js';
+test('前景讲话后回落到较低背景声时可断句，不修改声纹门槛',()=>{const base=.002,peak=.06;assert.ok(.06>speechThreshold(base,peak));assert.ok(.01<speechThreshold(base,peak));assert.ok(.01>speechThreshold(base,peak,false));assert.equal(speechThreshold(base,.005),base);assert.ok(speechThreshold(base,.8)<=.03);});

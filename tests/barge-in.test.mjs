@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {SpeechGate,wav} from '../apps/web/barge-in.mjs';
+test('短噪声不打断，持续人声触发，先学习底噪',()=>{const g=new SpeechGate();for(let i=0;i<20;i++)assert.equal(g.push(.003,20),false);for(let i=0;i<5;i++)assert.equal(g.push(.08,20),false);assert.equal(g.push(.003,20),false);for(let i=0;i<8;i++)assert.equal(g.push(.08,20),false);assert.equal(g.push(.08,20),true);});
+test('打断录音编码保持语音样本与采样率',async()=>{const b=await wav([new Float32Array([0,.5,-.5])],16000).arrayBuffer(),v=new DataView(b);assert.equal(v.getUint32(24,true),16000);assert.equal(v.getUint32(40,true),6);assert.equal(v.getInt16(46,true),16384);});

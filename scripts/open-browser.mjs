@@ -1,0 +1,1 @@
+import {execFile} from 'node:child_process';for(let i=0;i<30;i++){try{const r=await fetch('http://127.0.0.1:3210/api/health');const b=await r.json();if(b.ok&&b.mode==='mock'){execFile('cmd.exe',['/c','start','','http://127.0.0.1:3210']);break;}}catch{}await new Promise(r=>setTimeout(r,500));}
